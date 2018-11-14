@@ -1,0 +1,29 @@
+{% extends 'C:\Users\Karia\Desktop\HelpingHanddd\basicPages\templates\basicPages\base.html' %}
+{% load static %}
+
+{% block content %}
+
+    {% for post in posts %}
+        <div class="forum-canvas">
+            <h3 class="forum-title">{{ post.title }}</h3>
+            <h6>{{ post.date_posted }}</h6>
+            <p>{{ post.content }}</p>
+        </div>
+    {% endfor %}
+
+    <div class="forum-canvas">
+        <h3>Create a Post</h3>
+        <form name="newPost" method="post" action="{% url 'wordWallHome' %}">
+            {% csrf_token %}
+            <label>Post Title:</label>
+            <br>
+            <input name="title" type="text">
+            <br>
+            <label>Post Body:</label>
+            <br>
+            <textarea name="content" rows="10" cols="90"> </textarea>
+            <br>
+            <button class="btn btn-primary">Post</button>
+        </form>
+    </div>
+{% endblock %}

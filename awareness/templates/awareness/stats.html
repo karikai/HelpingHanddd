@@ -1,0 +1,211 @@
+{% extends 'C:\Users\Karia\Desktop\HelpingHanddd\basicPages\templates\basicPages\base.html' %}
+{% load static %}
+
+{% block content %}
+
+
+    <div class="container">
+        <div id="data-canvas">
+            <div class="row">
+                <div class="col">
+                    <h3>Opiod Deaths by Gender</h3>
+                    <button id="data-set-1" class="btn btn-primary">Change Data</button>
+                </div>
+                <div class="col">
+                    <h3>Opiod Deaths by City</h3>
+                    <button id="data-set-2" class="btn btn-primary">Change Data</button>
+                </div>
+                <div class="col">
+                    <h3>Opiod Deaths by Age</h3>
+                    <button id="data-set-3" class="btn btn-primary">Change Data</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="graph-canvas">
+            <canvas id="myChart" width="400" height="400"></canvas>
+        </div>
+
+        <script>
+
+            document.getElementById('data-set-1').onclick = function () {
+                // Fetching API
+
+                var male = 0;
+                var female = 0;
+
+                var xmlhttp = new XMLHttpRequest();
+                xmlhttp.onreadystatechange = function () {
+                    if (this.readyState == 4 && this.status == 200) {
+                        var myObj = JSON.parse(this.responseText);
+                        for (x in myObj) {
+                            if (myObj[x].sex == "Male") {
+                                console.log(male);
+                                male += 1;
+                            } else {
+                                console.log(female);
+                                female += 1;
+                            }
+                        }
+                    }
+                };
+
+                xmlhttp.open("GET", "https://data.ct.gov/resource/u2qy-687x.json?any_opioid=Y", true);
+                xmlhttp.send();
+
+
+                var ctx = document.getElementById("myChart").getContext('2d');
+                var myChart = new Chart(ctx, {
+                    type: 'pie',
+                    data: {
+                        labels: ['Male', 'Female'],
+                        datasets: [{
+                            label: 'Opiod Deaths by Gender',
+                            borderColor: ['#6ef6f6', '#a87ca3'],
+                            borderWidth: 2,
+                            backgroundColor: ['#7bc3de', '#deafd9'],
+                            data: [686, 168]
+                        }
+                        ]
+                    }, options: {
+                        hover: {
+                            // Overrides the global setting
+                            mode: 'index'
+                        }
+                    }
+                });
+            };
+
+            document.getElementById('data-set-2').onclick = function () {
+                // Fetching API
+
+                var hartford = 0;
+                var bridgeport = 0;
+                var new_haven = 0;
+                var waterbury = 0;
+                var other = 0;
+
+                var xmlhttp = new XMLHttpRequest();
+                xmlhttp.onreadystatechange = function () {
+                    if (this.readyState == 4 && this.status == 200) {
+                        var myObj = JSON.parse(this.responseText);
+                        for (x in myObj) {
+                            if(myObj[x].death_city == 'HARTFORD'){
+                                hartford += 1
+                            } else if(myObj[x].death_city == 'BRIDGEPORT'){
+                                bridgeport += 1
+                            } else if(myObj[x].death_city == 'WATERBURY'){
+                                waterbury += 1
+                            } else if(myObj[x].death_city == 'NEW HAVEN'){
+                                new_haven += 1
+                            } else{
+                                other += 1
+                            }
+                        }
+                    }
+                };
+
+                xmlhttp.open("GET", "https://data.ct.gov/resource/u2qy-687x.json?any_opioid=Y", true);
+                xmlhttp.send();
+
+
+                var ctx = document.getElementById("myChart").getContext('2d');
+                var myChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Hartford', 'Bridgeport', 'New Haven', 'Waterbury', 'Other'],
+                        datasets: [{
+                            label: 'Opiod Deaths by City',
+                            borderColor: 'White',
+                            borderWidth: 1,
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255, 206, 86, 1)',
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(153, 102, 255, 1)',
+                                'rgba(255, 159, 64, 1)'
+                            ],
+                            data: [77,34,46,49,480]
+                        }
+                        ]
+                    }, options: {
+                        hover: {
+                            // Overrides the global setting
+                            mode: 'index'
+                        }
+                    }
+                });
+            };
+
+            document.getElementById('data-set-3').onclick = function () {
+                // Fetching API
+
+                var age25 = 0;
+                var age35 = 0;
+                var age45 = 0;
+                var age55 = 0;
+                var age55plus = 0;
+
+                var xmlhttp = new XMLHttpRequest();
+                xmlhttp.onreadystatechange = function () {
+                    if (this.readyState == 4 && this.status == 200) {
+                        var myObj = JSON.parse(this.responseText);
+                        for (x in myObj) {
+                            if(myObj[x].age < 25){
+                                age25 += 1
+                            } else if((myObj[x].age >= 25) && (myObj[x].age < 35)){
+                                age35 += 1
+                            } else if((myObj[x].age >= 35) && (myObj[x].age < 45)){
+                                age45 += 1
+                            } else if((myObj[x].age >= 45) && (myObj[x].age < 55)){
+                                age55 += 1
+                            } else{
+                                age55plus += 1
+                            }
+
+                            console.log("25 " +age25);
+                            console.log("35 " +age35);
+                            console.log("45 " +age45);
+                            console.log("55 " +age55);
+                            console.log("55+ " +age55plus);
+                        }
+                    }
+                };
+
+                xmlhttp.open("GET", "https://data.ct.gov/resource/u2qy-687x.json?any_opioid=Y", true);
+                xmlhttp.send();
+
+
+                var ctx = document.getElementById("myChart").getContext('2d');
+                var myChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['> 25', '25 - 35', '35 - 45', '45 - 55', '55 <'],
+                        datasets: [{
+                            label: 'Opiod Deaths by Age',
+                            borderColor: 'White',
+                            borderWidth: 1,
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255, 206, 86, 1)',
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(153, 102, 255, 1)',
+                                'rgba(255, 159, 64, 1)'
+                            ],
+                            data: [62,171,147,167,139]
+                        }
+                        ]
+                    }, options: {
+                        hover: {
+                            // Overrides the global setting
+                            mode: 'index'
+                        }
+                    }
+                });
+            };
+
+        </script>
+    </div>
+{% endblock %}
