@@ -1,0 +1,34 @@
+{% extends 'C:\Users\Karia\Desktop\HelpingHanddd\basicPages\templates\basicPages\base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="container">
+
+                <h3>What Are Opiates</h3>
+
+                <video width="100%" height="40%" controls>
+                    <source id="video-player" src={% static 'education/The Science of Opioids.mp4' %} type="video/mp4">
+                </video>
+
+                <h3>Effects of Opiates</h3>
+
+                <video width="100%" height="40%" controls>
+                    <source id="video-player" src={% static 'education/This Is What Happens to Your Brain on Opioids  Short Film Showcase.mp4' %} type="video/mp4">
+                </video>
+
+                <h3>Signs of Opiate Use</h3>
+
+                <video width="100%" height="40%" controls>
+                    <source id="video-player" src={% static 'education/Signs of Opioid Addiction.mp4' %} type="video/mp4">
+                </video>
+
+                <h3>Recovering from Addiction</h3>
+
+                <video width="100%" height="40%" controls>
+                    <source id="video-player" src={% static 'education/My Story - Jackies Incredible Journey with Opioid Addiction (Full Story).mp4' %} type="video/mp4">
+                </video>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}
